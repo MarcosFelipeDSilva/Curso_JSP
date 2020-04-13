@@ -1,0 +1,133 @@
+CREATE DATABASE "curso-jsp"
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'pt_BR.utf8'
+       LC_CTYPE = 'pt_BR.utf8'
+       CONNECTION LIMIT = -1;
+       
+-- ---------------------------------------------
+
+CREATE SEQUENCE public.categoria_sequence
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 4
+  CACHE 1;
+ALTER TABLE public.categoria_sequence
+  OWNER TO postgres;
+         
+-- ---------------------------------------------
+  
+CREATE SEQUENCE public.produto_sequence
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE public.produto_sequence
+  OWNER TO postgres; 
+           
+-- ---------------------------------------------
+  
+CREATE SEQUENCE public.serialfone
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE public.serialfone
+  OWNER TO postgres;
+           
+-- ---------------------------------------------
+  
+CREATE SEQUENCE public.serialuser
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 9
+  CACHE 1;
+ALTER TABLE public.serialuser
+  OWNER TO postgres;
+           
+-- ---------------------------------------------
+  
+CREATE TABLE public.categoria
+(
+  id bigint NOT NULL DEFAULT nextval('categoria_sequence'::regclass),
+  nome character varying(50) NOT NULL,
+  CONSTRAINT categoria_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.categoria
+  OWNER TO postgres;
+            
+-- ---------------------------------------------
+  
+CREATE TABLE public.produto
+(
+  id bigint NOT NULL DEFAULT nextval('produto_sequence'::regclass),
+  nome character varying(50) NOT NULL,
+  valor numeric(8,4) NOT NULL,
+  quantidade bigint NOT NULL,
+  categoria_id bigint,
+  CONSTRAINT categoria_fk FOREIGN KEY (categoria_id)
+      REFERENCES public.categoria (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.produto
+  OWNER TO postgres;
+            
+-- ---------------------------------------------
+  
+CREATE TABLE public.telefone
+(
+  id bigint NOT NULL DEFAULT nextval('serialfone'::regclass),
+  numero character varying(50),
+  tipo character varying(500),
+  usuario bigint NOT NULL,
+  CONSTRAINT fone_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.telefone
+  OWNER TO postgres;
+              
+-- ---------------------------------------------
+  
+CREATE TABLE public.usuario
+(
+  login character varying(500),
+  senha character varying,
+  nome character varying(500),
+  id bigint NOT NULL DEFAULT nextval('serialuser'::regclass),
+  fone character varying(20),
+  cep character varying(200),
+  rua character varying(200),
+  bairro character varying(200),
+  cidade character varying(200),
+  ibge character varying(200),
+  estado character varying(200),
+  foto text,
+  contenttype text,
+  contenttypepdf text,
+  pdf text,
+  minifoto text,
+  ativo boolean,
+  sexo character varying(50),
+  perfil character varying(20)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.usuario
+  OWNER TO postgres;
+              
+-- ---------------------------------------------
+  
