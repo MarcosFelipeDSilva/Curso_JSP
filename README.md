@@ -11,7 +11,7 @@ Este projeto faz parte do curso **Java Web Full-Stack** ministrado pelo *Alex Fe
 
 ### Tela de Cadastro de Usuarios
 <img src="imagens/tela_cad.png">
-<img src="imagens/tela_cad01.png">
+
 
 ### Tela de Cadastro de Produtos
 <img src="imagens/tela_cad_prod.png">
